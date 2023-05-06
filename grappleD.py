@@ -71,7 +71,7 @@ def MENUmain(menuMain,menuDefaults,recurse,outputStyl,ext,csvOption,search_path,
         elif menuMainChoice == 2: #input Search Directory
             search_path_loop = 1
             while search_path_loop == 1:
-                search_path = str(input('\n Enter the file path to the top level search directory (i.e. which folder to begin searching in).\n *The path must begin with a drive letter, not a server name, (i.e. "j:\\Austin\\Projects\\")\n'))
+                search_path = str(input('\n Enter the file path to the top level search directory (i.e. which folder to begin searching in).\n'))
                 # check for trailing backslash
                 search_path = checkBackSlash(search_path)
                 
@@ -85,7 +85,7 @@ def MENUmain(menuMain,menuDefaults,recurse,outputStyl,ext,csvOption,search_path,
         elif menuMainChoice == 3: #input Search Term
             search_term_loop = 1
             while search_term_loop == 1:
-                search_term = str(input('\n Enter the term search directory (i.e. "daily", or "notes").\n'))
+                search_term = str(input('\n Enter the term to search for (i.e. "daily", or "notes").\n'))
                 termCheckresponse = input(f'\n You have entered "{search_term}", is this correct?\n (Y for yes, or N for no.)\n')
                 if termCheckresponse == "n" or termCheckresponse == "N" or termCheckresponse == "no" or termCheckresponse == "No" or termCheckresponse == "NO":
                     print(' Okay, let\'s try again.')
@@ -96,7 +96,7 @@ def MENUmain(menuMain,menuDefaults,recurse,outputStyl,ext,csvOption,search_path,
         elif menuMainChoice == 4: #input Save Directory
             save_path_loop = 1
             while save_path_loop == 1:
-                save_path = str(input('\n Enter the file path to the save directory (i.e. which folder to save the files/shortcuts in.).\n *The path must begin with a drive letter, not a server name, (i.e. "j:\\Austin\\Projects\\")\n'))
+                save_path = str(input('\n Enter the file path to the save directory (i.e. which folder to save the files/shortcuts in.).\n'))
                 # check for trailing backslash
                 save_path = checkBackSlash(save_path)
                 
@@ -284,13 +284,16 @@ def get_file_paths(SEARCHVALUES):#(recurse(bool),outputStyl(bool),ext(str),csvOp
         target = f'{search_path}**\\*{search_term}*.{ext}'
         for file in glob.glob(target, recursive=True):
             print(file)
-            if csvOption == 1:#Write CSV
-                writeCSV(file,save_path,search_term)
-                
-            if outputStyl == 0:#move file
-                copyFiles(file,save_path)      
+            if file.find('DailyReportPkg') > 0:
+                print('File Not included - package submit daily.')
             else:
-                continue
+                if csvOption == 1:#Write CSV
+                    writeCSV(file,save_path,search_term)
+                    
+                if outputStyl == 0:#move file
+                    copyFiles(file,save_path)      
+                else:
+                    continue
                 
             
 
