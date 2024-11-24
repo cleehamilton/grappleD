@@ -37,7 +37,7 @@ menuMain = "\n ------------MAIN MENU------------\n 1.Default Settings\n 2.Choose
 menuMain_S = "\n ------------MAIN MENU------------\n 1.Default Settings\n 2.Choose Search Directory\n 3.Choose Search Term\n 4.Choose Save Directory\n\n 5.Search Now\n\n 9.Exit GrappleD\n ---------------------------------\n"
 menuDefaults = "\n ------------Default Settings MENU------------\n 1.Recursive Search Setting?\n 2.File Extension\n 3.Output CSV?\n 4.Exclusion?\n\n 9.Back to Main Menu\n ---------------------------------------------\n"# 2.Output Style\n 
 recurse = 1 #recursive search 0 single folder search only; 1 Recursive search starting at TOP level folder
-outputStyl = 0 #ouput style - 0 copies the file; 1 creates a shortcut to the file.
+outputStyl = 0 #ouput style - 0 copies the file; 1 creates a shortcut to the file.*not working yet
 fileExt = 'pdf'
 ext = f'{fileExt}'
 csvOption = 0 # Creates a CSV of Found Files w/links to thier location - 0 Does not create; 1 Creates CSV
@@ -103,7 +103,7 @@ def MENUmain(menuMain,menuDefaults,recurse,outputStyl,ext,csvOption,search_path,
         
         if menuMainChoice == 9: #Exit App
             print('\n/---Exiting Application---\\')
-            time.sleep(2)
+            time.sleep(1)
             menuLoop = 0
             Mainloop = 'exit'
             return Mainloop
@@ -463,7 +463,7 @@ def MENUdefaults(menuDefaults,recurse,outputStyl,ext,csvOption,exclusion):
                 time.sleep(1)
             menueloop = 1
 
-        elif menuDefaultsChoice == 4: #File Extension 
+        elif menuDefaultsChoice == 4: #File Exclusion
             EXTloop = 1
             while EXTloop == 1:
                 try:
@@ -560,10 +560,12 @@ def createShortcuts(file,save_path):#in testing
 
 ''' Main Func '''
 def get_file_paths(SEARCHVALUES):#(recurse(bool),outputStyl(bool),ext(str),csvOption(bool)),search_path(str),search_term(str),save_path(str)
+    #print(SEARCHVALUES)
     recurse = SEARCHVALUES[1][0]#recurse(bool)
     outputStyl = SEARCHVALUES[1][1]#outputStyl(bool)
     ext = SEARCHVALUES[1][2]#ext(str)
     csvOption = SEARCHVALUES[1][3]#csvOption(bool)
+    exclusion = SEARCHVALUES[1][4] #exclusion term
     search_path = SEARCHVALUES[2]#search_path(str)
     search_term = SEARCHVALUES[3]#search_term(str)
     save_path = SEARCHVALUES[4]#save_path(str)
@@ -609,7 +611,7 @@ def get_file_paths(SEARCHVALUES):#(recurse(bool),outputStyl(bool),ext(str),csvOp
 
 if __name__ == "__main__":  
     print(intro)
-    time.sleep(2)
+    time.sleep(1)
     print(welcomeMsg)
     Mainloop = 777
     while Mainloop == 777:
